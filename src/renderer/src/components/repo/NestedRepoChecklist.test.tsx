@@ -21,7 +21,7 @@ const scan: NestedRepoScanResult = {
 }
 
 describe('NestedRepoChecklist', () => {
-  it('renders a flat checklist with stable collision labels', () => {
+  it('renders stable collision labels while retaining full paths for test identification', () => {
     const html = renderToStaticMarkup(
       <NestedRepoChecklist
         scan={scan}
@@ -29,13 +29,20 @@ describe('NestedRepoChecklist', () => {
         onSelectedPathsChange={vi.fn()}
       />
     )
+    const visibleText = html.replace(/<[^>]+>/g, '')
 
-    expect(html).toContain('Deselect all')
-    expect(html).toContain('3 of 3 selected')
-    expect(html).toContain('web')
-    expect(html).toContain('payments/api')
-    expect(html).toContain('billing/api')
-    expect(html).not.toContain('Project group')
-    expect(html).not.toContain('/workspace/platform/payments/api')
+    expect(visibleText).toContain('Deselect all')
+    expect(visibleText).toContain('3 of 3 selected')
+    expect(visibleText).toContain('web')
+    expect(visibleText).toContain('payments/api')
+    expect(visibleText).toContain('billing/api')
+    expect(visibleText).not.toContain('Project group')
+    expect(visibleText).not.toContain('/workspace/platform/payments/api')
+
+    expect(html).toContain('data-testid="nested-repo-checklist"')
+    expect(html).toContain('data-testid="nested-repo-select-all"')
+    for (const repo of scan.repos) {
+      expect(html).toContain(`data-repo-path="${repo.path}"`)
+    }
   })
 })

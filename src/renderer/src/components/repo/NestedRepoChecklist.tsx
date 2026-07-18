@@ -30,6 +30,7 @@ function NestedRepoSelectAllRow({
   return (
     <label className="flex min-w-0 cursor-pointer items-center gap-2.5 bg-muted/30 px-3 py-2 text-sm hover:bg-muted/50">
       <input
+        data-testid="nested-repo-select-all"
         ref={handleCheckboxRef}
         type="checkbox"
         className="size-3.5"
@@ -72,6 +73,7 @@ export function NestedRepoChecklist({
 
   return (
     <div
+      data-testid="nested-repo-checklist"
       className={cn(
         'flex max-h-64 min-h-0 min-w-0 max-w-full flex-col overflow-hidden rounded-md border border-border bg-background/60',
         className
@@ -95,6 +97,7 @@ export function NestedRepoChecklist({
           <li key={repo.path}>
             <label className="flex min-w-0 max-w-full cursor-pointer items-center gap-2.5 overflow-hidden border-t border-border px-3 py-2 text-sm hover:bg-accent">
               <input
+                data-repo-path={repo.path}
                 type="checkbox"
                 className="size-3.5"
                 checked={selectedPaths.has(repo.path)}
